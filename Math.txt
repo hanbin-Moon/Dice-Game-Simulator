@@ -1,0 +1,42 @@
+X = % Chance of losing
+Y = Prize factor
+M = Current money
+B = Bet
+
+// Progression of money over time
+// W(t) has negative slope for x > .5
+W(t) = (1-x)(y-1)(b)t + M - (x)(b)t
+
+// Amount of time needed to lose all game money on standard bet
+M = Sigma([1, t], Sigma([1, t-1], (X)(B) ))
+
+
+/* Profit algorithm
+
+  1. Set n | n <= M/100
+  2. Set B = n
+  3. Bet B
+  4. If win, Set B = n. Go to 3.
+  5. else, B = 2*b. Go to 3. */
+
+
+// Math behind profit model
+// Hardcode 2 because of profit algorithm B=2*B
+
+L = successive loss count
+
+Money lost total = (B)(2^L - 1)
+
+// To achieve L such that M = Money lost total
+L = Log[2]((M/B) + 1)
+
+// Odds of achieving L
+chance = X^L
+
+// Using b=1, m=128, y=2
+L = Log[2]((100) + 1) = 7
+
+// using x=.55
+.55^7 = 1.5%
+
+With profit algorithm, chance to lose all cash is directly related to standard bet. As standard bet approaches 0% of available betting power, chance to lose all cash approaches 0%
